@@ -4,6 +4,13 @@
  */
 package calculadorav3;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 /**
  *
  * @author 202110131
@@ -15,6 +22,13 @@ public class calculadora_Estatistica extends javax.swing.JPanel {
      */
     public calculadora_Estatistica() {
         initComponents();
+        try{
+         BufferedImage bufferedImage = ImageIO.read(new File("C:\\Users\\202210345\\Documents\\GitHub\\Calculadora_Estatistica\\icons"));
+        Image img = bufferedImage.getScaledInstance(800, 500, Image.SCALE_DEFAULT);
+        jButton1.setIcon(new ImageIcon(img));
+                }
+        catch(Exception e)
+        {}
     }
 
     /**
