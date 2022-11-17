@@ -16,6 +16,12 @@ public calculosEstatisticos(double[] dados){
 }
 
 
+public void setDados(double[] novos){
+    if(novos != null)
+        this.dados = novos;
+}
+
+
 public double media(){
     return stats.getMean();
 }
