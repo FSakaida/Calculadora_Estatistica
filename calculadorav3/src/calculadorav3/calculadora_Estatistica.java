@@ -25,7 +25,7 @@ public class calculadora_Estatistica extends javax.swing.JPanel {
         try{
          BufferedImage bufferedImage = ImageIO.read(new File("C:\\Users\\202210345\\Documents\\GitHub\\Calculadora_Estatistica\\icons"));
         Image img = bufferedImage.getScaledInstance(800, 500, Image.SCALE_DEFAULT);
-        jButton1.setIcon(new ImageIcon(img));
+        jButton1.setIcon(new ImageIcon(img));   
                 }
         catch(Exception e)
         {}
