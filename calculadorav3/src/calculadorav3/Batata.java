@@ -11,9 +11,9 @@ package calculadorav3;
 public class Batata {
     
     public static void main(String[] args) {
-	double vetor[] = {3, 4, 5};
+	double vetor[] = {3, 4, 5, 8, 7};
         calculosEstatisticos calculadora = new calculosEstatisticos(vetor);
-        System.out.println("isso ai MNAOO" + calculadora.mediana());
+        System.out.println("isso ai MNAOO " + calculadora.desvioPadrao());
 }
     
 }

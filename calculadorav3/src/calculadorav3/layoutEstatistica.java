@@ -6,6 +6,9 @@ package calculadorav3;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.apache.commons.math3.stat.descriptive.rank.Median;
 
 /**
  *
@@ -18,6 +21,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
      */
     public layoutEstatistica() {
         initComponents();
+        String operacao;
     }
 
     /**
@@ -32,13 +36,13 @@ public class layoutEstatistica extends javax.swing.JFrame {
         calcbasica = new javax.swing.JButton();
         calcular = new javax.swing.JButton();
         visor2 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        bmedia = new javax.swing.JCheckBox();
+        bmoda = new javax.swing.JCheckBox();
+        bmediana = new javax.swing.JCheckBox();
+        bdesviopadrao = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        btnCarregar = new javax.swing.JButton();
+        grafico = new javax.swing.JCheckBox();
+        resultados = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,22 +51,37 @@ public class layoutEstatistica extends javax.swing.JFrame {
         calcular.setForeground(new java.awt.Color(72, 51, 177));
         calcular.setText("Calcular");
         calcular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
+        calcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calcularActionPerformed(evt);
+            }
+        });
 
         visor2.setEditable(false);
         visor2.setForeground(new java.awt.Color(72, 51, 177));
         visor2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
+        visor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visor2ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox1.setForeground(new java.awt.Color(72, 51, 177));
-        jCheckBox1.setText("Média");
+        bmedia.setForeground(new java.awt.Color(72, 51, 177));
+        bmedia.setText("Média");
+        bmedia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bmediaActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setForeground(new java.awt.Color(72, 51, 177));
-        jCheckBox2.setText("Moda");
+        bmoda.setForeground(new java.awt.Color(72, 51, 177));
+        bmoda.setText("Moda");
 
-        jCheckBox3.setForeground(new java.awt.Color(72, 51, 177));
-        jCheckBox3.setText("Mediana");
+        bmediana.setForeground(new java.awt.Color(72, 51, 177));
+        bmediana.setText("Mediana");
 
-        jCheckBox4.setForeground(new java.awt.Color(72, 51, 177));
-        jCheckBox4.setText("Desvio Padrão");
+        bdesviopadrao.setForeground(new java.awt.Color(72, 51, 177));
+        bdesviopadrao.setText("Desvio Padrão");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
 
@@ -74,22 +93,11 @@ public class layoutEstatistica extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
+            .addGap(0, 218, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Procurar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        btnCarregar.setText("Carregar");
-        btnCarregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarregarActionPerformed(evt);
-            }
-        });
+        grafico.setForeground(new java.awt.Color(72, 51, 177));
+        grafico.setText("Gráfico");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,49 +107,44 @@ public class layoutEstatistica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                        .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(visor2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnCarregar)
-                                    .addComponent(jButton1))
-                                .addGap(41, 41, 41)))
-                        .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(visor2)
+                            .addComponent(resultados))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bmedia)
+                        .addGap(18, 18, 18)
+                        .addComponent(bmoda)
+                        .addGap(18, 18, 18)
+                        .addComponent(bmediana)
+                        .addGap(18, 18, 18)
+                        .addComponent(bdesviopadrao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(grafico)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(calcular)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox4)
-                            .addComponent(btnCarregar)))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(visor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resultados, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(calcular)
+                    .addComponent(bmedia)
+                    .addComponent(bmoda)
+                    .addComponent(bmediana)
+                    .addComponent(bdesviopadrao)
+                    .addComponent(grafico))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -150,22 +153,36 @@ public class layoutEstatistica extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 File arquivo;
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            JFileChooser jfc = new JFileChooser();
-        if (jfc.showOpenDialog(this) == jfc.APPROVE_OPTION) {
-            arquivo = jfc.getSelectedFile();
-            visor2.setText(arquivo.getAbsolutePath());
-            btnCarregar.setEnabled(true);
-        } else {
-            arquivo = null;
-            visor2.setText("");
-            btnCarregar.setEnabled(false);
+    private void calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularActionPerformed
+        visor2.setText("");
+        if (bmedia.isSelected()) {
+            //resultados.setText(String.valueOf(StatUtils.mean(v)));
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCarregarActionPerformed
+        if (bmediana.isSelected()) {
+
+        }
+
+        if (bmoda.isSelected()) {
+
+        }
+
+        if (bdesviopadrao.isSelected()) {
+
+        }
+
+        if (grafico.isSelected()) {
+
+        }
+    }//GEN-LAST:event_calcularActionPerformed
+
+    private void bmediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bmediaActionPerformed
+
+    }//GEN-LAST:event_bmediaActionPerformed
+
+    private void visor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visor2ActionPerformed
+
+    }//GEN-LAST:event_visor2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,15 +220,15 @@ File arquivo;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCarregar;
+    private javax.swing.JCheckBox bdesviopadrao;
+    private javax.swing.JCheckBox bmedia;
+    private javax.swing.JCheckBox bmediana;
+    private javax.swing.JCheckBox bmoda;
     private javax.swing.JButton calcbasica;
     private javax.swing.JButton calcular;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox grafico;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField resultados;
     private javax.swing.JTextField visor2;
     // End of variables declaration//GEN-END:variables
 }
