@@ -45,7 +45,7 @@
                       <Component id="bdesviopadrao" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="grafico" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="37" max="32767" attributes="0"/>
+                      <EmptySpace pref="45" max="32767" attributes="0"/>
                       <Component id="calcular" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -65,7 +65,7 @@
                   </Group>
                   <Component id="calcbasica" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="calcular" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bmedia" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -136,9 +136,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="M&#xe9;dia"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bmediaActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="bmoda">
       <Properties>
@@ -183,7 +180,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="218" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="222" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -197,6 +194,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="resultados">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder thickness="2">
+              <Color PropertyName="color" blue="b1" green="33" red="48" type="rgb"/>
+            </LineBorder>
+          </Border>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resultadosActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

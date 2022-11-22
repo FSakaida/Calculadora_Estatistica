@@ -68,11 +68,6 @@ public class layoutEstatistica extends javax.swing.JFrame {
 
         bmedia.setForeground(new java.awt.Color(72, 51, 177));
         bmedia.setText("Média");
-        bmedia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bmediaActionPerformed(evt);
-            }
-        });
 
         bmoda.setForeground(new java.awt.Color(72, 51, 177));
         bmoda.setText("Moda");
@@ -93,11 +88,19 @@ public class layoutEstatistica extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 218, Short.MAX_VALUE)
+            .addGap(0, 222, Short.MAX_VALUE)
         );
 
         grafico.setForeground(new java.awt.Color(72, 51, 177));
         grafico.setText("Gráfico");
+
+        resultados.setEditable(false);
+        resultados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
+        resultados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resultadosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,7 +126,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
                         .addComponent(bdesviopadrao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(grafico)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(57, 57, 57))
         );
@@ -137,7 +140,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(resultados, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(calcular)
                     .addComponent(bmedia)
@@ -157,32 +160,36 @@ File arquivo;
         visor2.setText("");
         if (bmedia.isSelected()) {
             //resultados.setText(String.valueOf(StatUtils.mean(v)));
+            //para printar a media
         }
 
         if (bmediana.isSelected()) {
-
+            //resultados.setText(String.valueOf(StatUtils.percentile(50)));
+            //para printar a mediana
         }
 
         if (bmoda.isSelected()) {
-
+            //resultados.setText(String.valueOf(StatUtils.mode(dados)[0]));
+            //para printar a moda
         }
 
         if (bdesviopadrao.isSelected()) {
-
+            //java nao acha o standard deviation
+            //resultados.setText(String.valueOf(StatUtils.St));
         }
 
         if (grafico.isSelected()) {
-
+            
         }
     }//GEN-LAST:event_calcularActionPerformed
 
-    private void bmediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bmediaActionPerformed
-
-    }//GEN-LAST:event_bmediaActionPerformed
-
     private void visor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visor2ActionPerformed
-
+        //onde vai aparecer os numeros que o usuario digitar
     }//GEN-LAST:event_visor2ActionPerformed
+
+    private void resultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultadosActionPerformed
+        //resultados media moda mediana dp
+    }//GEN-LAST:event_resultadosActionPerformed
 
     /**
      * @param args the command line arguments
