@@ -59,12 +59,17 @@ public class calculosEstatisticos {
         // pode ser amodal
     }
     
-    public double classWidth(){
+    public int classWidth(){
         //https://geokrigagem.com.br/numero_classes_histograma_regra_sturges/
         // utilizado a regra de Sturges
         double cw, max, min;
-        max = StatUtils.max(dados.stream().mapToDouble(Double::doubleValue).toArray());
-        min = StatUtils.min(dados.stream().mapToDouble(Double::doubleValue).toArray());
+        int nClasses;
+        double[] data = (dados.stream().mapToDouble(Double::doubleValue).toArray());
+        max = StatUtils.max(data);
+        min = StatUtils.min(data);
+        nClasses = (int) (1 + 3.322 * Math.log(data.length));
+        cw = (max - min)/nClasses;
+        return (int) cw;
         
     }
 
@@ -79,22 +84,22 @@ public class calculosEstatisticos {
         return false;
     }
 
-    public double freq() {
-        dados.stream()
-                .map(d -> Double.parseDouble(d.toString()))
-                .distinct()
-                .forEach(observation -> {
-                    long observationFrequency = frequencia.getCount(observation);
-                    int upperBoundary = (observation > classWidth)
-                            ? Math.multiplyExact((int) Math.ceil(observation / classWidth), classWidth)
-                            : classWidth;
-                    int lowerBoundary = (upperBoundary > classWidth)
-                            ? Math.subtractExact(upperBoundary, classWidth)
-                            : 0;
-                    String bin = lowerBoundary + "-" + upperBoundary;
-
-                    updateDistributionMap(lowerBoundary, bin, observationFrequency);
-                });
-    }
+//    public List<String[]> intervalos() {
+//         return dados.stream()
+//                .map(d -> Double.parseDouble(d.toString()))
+//                .distinct()
+//                .forEach(observation -> {
+//                    long observationFrequency = frequencia.getCount(observation);
+//                    int upperBoundary = (observation > classWidth())
+//                            ? Math.multiplyExact((int) Math.ceil(observation / classWidth()), classWidth())
+//                            : classWidth();
+//                    int lowerBoundary = (upperBoundary > classWidth())
+//                            ? Math.subtractExact(upperBoundary, classWidth())
+//                            : 0;
+//                    String bin = lowerBoundary + "-" + upperBoundary;
+//
+//                    //updateDistributionMap(lowerBoundary, bin, observationFrequency);
+//                });
+//    }
 
 }

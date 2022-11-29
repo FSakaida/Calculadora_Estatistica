@@ -32,6 +32,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
      * Creates new form layoutEstatistica
      */
     calculosEstatisticos operacoes = new calculosEstatisticos();
+    List<String> paraGrafico = new ArrayList<>();
     File historico = new File("C:/Users/202210345/Documents/GitHub/Calculadora_Estatistica/CalculadoraV4/res/Historico/historico.txt");
 
     public layoutEstatistica() {
@@ -342,7 +343,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
             }
 
             if (bgrafico.isSelected()) {
-
+                
             }
             salvarOperacao();
         } catch (Exception e) {
@@ -534,24 +535,24 @@ public class layoutEstatistica extends javax.swing.JFrame {
         });
     }
     
-    public void grafico(){
-        CategoryChart chart = new CategoryChartBuilder().width(800).height(600)
-                .title("Age Distribution")
-                .xAxisTitle("Age Group")
-                .yAxisTitle("Frequency")
-                .build();
-
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
-        chart.getStyler().setAvailableSpaceFill(0.99);
-        chart.getStyler().setOverlapped(true);
-
-        List yData = new ArrayList();
-        yData.addAll(distributionMap.values());
-        List xData = Arrays.asList(distributionMap.keySet().toArray());
-        chart.addSeries("age group", xData, yData);
-
-        new SwingWrapper<>(chart).displayChart();
-    }
+//    public void grafico(){
+//        CategoryChart chart = new CategoryChartBuilder().width(800).height(600)
+//                .title("Age Distribution")
+//                .xAxisTitle("Age Group")
+//                .yAxisTitle("Frequency")
+//                .build();
+//
+//        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+//        chart.getStyler().setAvailableSpaceFill(0.99);
+//        chart.getStyler().setOverlapped(true);
+//
+//        List yData = new ArrayList();
+//        yData.addAll(paraGrafico.values());
+//        List xData = Arrays.asList(distributionMap.keySet().toArray());
+//        chart.addSeries("age group", xData, yData);
+//
+//        new SwingWrapper<>(chart).displayChart();
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox bdesviopadrao;
