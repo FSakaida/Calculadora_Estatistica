@@ -344,8 +344,12 @@ public class layoutEstatistica extends javax.swing.JFrame {
             }
 
             if (bgrafico.isSelected()) {
-                Histograma histo = new Histograma();
-                new Thread(new SwingWrapper<>(histo.getChart()).displayChart());
+                
+                new Thread(() -> {
+                Histograma histo = new Histograma(operacoes.getDados());
+                //histo.setDataSet(operacoes.getDados());
+               
+                }).start();
                 
                 
             }
