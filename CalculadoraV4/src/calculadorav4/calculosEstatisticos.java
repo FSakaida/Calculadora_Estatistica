@@ -2,10 +2,12 @@ package calculadorav4;
 
 import java.util.List;
 import java.util.ArrayList;
+import static java.util.Collections.frequency;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.Frequency;
 
+//https://www.baeldung.com/apache-commons-frequency
 public class calculosEstatisticos {
 // Get a DescriptiveStatistics instance
 
@@ -50,13 +52,22 @@ public class calculosEstatisticos {
         return stats.getPercentile(50);
     }
 
-    public double[] moda() {     
+    public double[] moda() {
         double data[] = dados.stream().mapToDouble(Double::doubleValue).toArray();
         return StatUtils.mode(data);
         // printar todas as modas
         // pode ser amodal
     }
+    
+    public double classWidth(){
+        //https://geokrigagem.com.br/numero_classes_histograma_regra_sturges/
+        // utilizado a regra de Sturges
+        double cw, max, min;
+        max = StatUtils.max(dados.stream().mapToDouble(Double::doubleValue).toArray());
+        min = StatUtils.min(dados.stream().mapToDouble(Double::doubleValue).toArray());
         
+    }
+
     public boolean ehModal() {
 
         for (Double dado : dados) {
@@ -66,6 +77,24 @@ public class calculosEstatisticos {
         }
 
         return false;
+    }
+
+    public double freq() {
+        dados.stream()
+                .map(d -> Double.parseDouble(d.toString()))
+                .distinct()
+                .forEach(observation -> {
+                    long observationFrequency = frequencia.getCount(observation);
+                    int upperBoundary = (observation > classWidth)
+                            ? Math.multiplyExact((int) Math.ceil(observation / classWidth), classWidth)
+                            : classWidth;
+                    int lowerBoundary = (upperBoundary > classWidth)
+                            ? Math.subtractExact(upperBoundary, classWidth)
+                            : 0;
+                    String bin = lowerBoundary + "-" + upperBoundary;
+
+                    updateDistributionMap(lowerBoundary, bin, observationFrequency);
+                });
     }
 
 }

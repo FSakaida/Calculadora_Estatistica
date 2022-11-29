@@ -4,17 +4,10 @@
  */
 package calculadorav4;
 
-import com.sun.tools.javac.Main;
-import java.io.File;
-import javax.swing.JFileChooser;
-import org.apache.commons.math3.stat.StatUtils;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import org.apache.commons.math3.stat.descriptive.rank.Median;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -23,6 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.style.Styler;
 
 /**
  *
@@ -492,6 +490,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
         } finally {
             try {
                 writer.close();
+                
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -533,6 +532,25 @@ public class layoutEstatistica extends javax.swing.JFrame {
                 new layoutEstatistica().setVisible(true);
             }
         });
+    }
+    
+    public void grafico(){
+        CategoryChart chart = new CategoryChartBuilder().width(800).height(600)
+                .title("Age Distribution")
+                .xAxisTitle("Age Group")
+                .yAxisTitle("Frequency")
+                .build();
+
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        chart.getStyler().setAvailableSpaceFill(0.99);
+        chart.getStyler().setOverlapped(true);
+
+        List yData = new ArrayList();
+        yData.addAll(distributionMap.values());
+        List xData = Arrays.asList(distributionMap.keySet().toArray());
+        chart.addSeries("age group", xData, yData);
+
+        new SwingWrapper<>(chart).displayChart();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
