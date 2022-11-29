@@ -4,6 +4,7 @@
  */
 package calculadorav4;
 
+import com.sun.tools.javac.Main;
 import java.io.File;
 import javax.swing.JFileChooser;
 import org.apache.commons.math3.stat.StatUtils;
@@ -13,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -32,10 +34,12 @@ public class layoutEstatistica extends javax.swing.JFrame {
      * Creates new form layoutEstatistica
      */
     calculosEstatisticos operacoes = new calculosEstatisticos();
+    File historico = new File("C:/Users/202210345/Documents/GitHub/Calculadora_Estatistica/CalculadoraV4/res/Historico/historico.txt");
 
     public layoutEstatistica() {
         initComponents();
         String operacao;
+        carregarHistorico();
     }
 
     /**
@@ -354,8 +358,27 @@ public class layoutEstatistica extends javax.swing.JFrame {
         return (pInteira + pDecimal);
     }
 
-    public void carregarHistorico() {
-
+    public void carregarHistorico() {  
+       String delimitador = "@";
+        try {
+            FileReader reader = new FileReader(historico);
+            BufferedReader buffer = new BufferedReader(reader);
+            String linha = buffer.readLine();
+            while (linha != null) {
+                String row[] = new String[5];
+                int i = 0;
+                for (StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador); stringTokenizer.hasMoreTokens();) {
+                    String token = stringTokenizer.nextToken();
+                    row[i] = token;
+                    i++;
+                }
+                
+                ((DefaultTableModel) tbHistorico.getModel()).addRow(row);
+                linha = buffer.readLine();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void salvarOperacao() {
@@ -445,8 +468,8 @@ public class layoutEstatistica extends javax.swing.JFrame {
         String delimitador = "@";
         FileWriter writer = null;
         try {
-            File historico = new File("../../res/historico.txt");
-            writer = new FileWriter(arquivo);
+            //URL main = layoutEstatistica.class.getResource("layoutEstatistica.class");
+            writer = new FileWriter(historico);
             int nlinhas = ((DefaultTableModel) tbHistorico.getModel()).getRowCount();
             int ncols = ((DefaultTableModel) tbHistorico.getModel()).getColumnCount();
             for (int i = 0; i < nlinhas; i++) {
