@@ -19,8 +19,8 @@ import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.time.format.DateTimeFormatter;  
-import java.time.LocalDateTime;    
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -31,8 +31,8 @@ public class layoutEstatistica extends javax.swing.JFrame {
     /**
      * Creates new form layoutEstatistica
      */
-    
     calculosEstatisticos operacoes = new calculosEstatisticos();
+
     public layoutEstatistica() {
         initComponents();
         String operacao;
@@ -55,19 +55,19 @@ public class layoutEstatistica extends javax.swing.JFrame {
         bmediana = new javax.swing.JCheckBox();
         bdesviopadrao = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
-        grafico = new javax.swing.JCheckBox();
+        bgrafico = new javax.swing.JCheckBox();
         txtDados = new javax.swing.JTextField();
         btnSelecionar = new javax.swing.JButton();
         btnCarregar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         txtMedia = new javax.swing.JTextField();
         txtModa = new javax.swing.JTextField();
         txtMediana = new javax.swing.JTextField();
         txtDesvio = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbHistorico = new javax.swing.JTable();
-        btnCalcular1 = new javax.swing.JButton();
+        btnLimparHistorico = new javax.swing.JButton();
+        btnLimparGeral = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,11 +117,16 @@ public class layoutEstatistica extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        grafico.setForeground(new java.awt.Color(72, 51, 177));
-        grafico.setText("Gráfico");
+        bgrafico.setForeground(new java.awt.Color(72, 51, 177));
+        bgrafico.setText("Gráfico");
+        bgrafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bgraficoActionPerformed(evt);
+            }
+        });
 
         txtDados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
         txtDados.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +136,7 @@ public class layoutEstatistica extends javax.swing.JFrame {
         });
 
         btnSelecionar.setForeground(new java.awt.Color(72, 51, 177));
-        btnSelecionar.setText("Selecionar");
+        btnSelecionar.setText("...");
         btnSelecionar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
         btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,16 +153,9 @@ public class layoutEstatistica extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Arquivo");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         tbHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Media", "Moda", "Mediana", "Desvio Padrão", "Data"
@@ -173,12 +171,28 @@ public class layoutEstatistica extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbHistorico);
 
-        btnCalcular1.setForeground(new java.awt.Color(72, 51, 177));
-        btnCalcular1.setText("Limpar Histórico");
-        btnCalcular1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
-        btnCalcular1.addActionListener(new java.awt.event.ActionListener() {
+        btnLimparHistorico.setForeground(new java.awt.Color(72, 51, 177));
+        btnLimparHistorico.setText("Limpar Histórico");
+        btnLimparHistorico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
+        btnLimparHistorico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcular1ActionPerformed(evt);
+                btnLimparHistoricoActionPerformed(evt);
+            }
+        });
+
+        btnLimparGeral.setText("Limpar Geral");
+        btnLimparGeral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparGeralActionPerformed(evt);
+            }
+        });
+
+        btnFechar.setForeground(new java.awt.Color(72, 51, 177));
+        btnFechar.setText("Fechar");
+        btnFechar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(72, 51, 177), 2));
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
             }
         });
 
@@ -190,144 +204,164 @@ public class layoutEstatistica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDados, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(273, 273, 273))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtMedia)
-                            .addComponent(bmedia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bmoda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtModa))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bmediana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtMediana))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(bdesviopadrao)
+                                .addComponent(txtDados, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bmedia)
+                                    .addComponent(txtMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(grafico)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(73, 73, 73))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDesvio, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bmoda)
+                                    .addComponent(txtModa, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bmediana)
+                                    .addComponent(txtMediana, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnCalcular1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))))
-                        .addContainerGap())))
+                                        .addComponent(bdesviopadrao)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(bgrafico))
+                                    .addComponent(txtDesvio, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(134, 134, 134)
+                                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLimparGeral)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLimparHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(209, 209, 209))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDados)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSelecionar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCarregar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCalcular)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bmedia)
-                    .addComponent(bmoda)
-                    .addComponent(bmediana)
-                    .addComponent(bdesviopadrao)
-                    .addComponent(grafico)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSelecionar))
+                            .addComponent(calcbasica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(btnFechar)))
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bmedia)
+                            .addComponent(bmoda)
+                            .addComponent(bmediana)
+                            .addComponent(bdesviopadrao)
+                            .addComponent(bgrafico))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMedia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtModa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMediana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDesvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCalcular1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCarregar)
+                            .addComponent(txtDados, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCalcular)
+                        .addGap(29, 29, 29)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimparGeral)
+                    .addComponent(btnLimparHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     File arquivo;
-    
+
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        String dados = txtDados.getText();
-        List<Double> novosDados = new ArrayList<>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(dados, ";"); stringTokenizer.hasMoreTokens();) {
-                    String token = stringTokenizer.nextToken();
-                    novosDados.add(Double.parseDouble(token));
-        }
-        operacoes.setDados(novosDados);
-        if (bmedia.isSelected()) {
-            txtMedia.setText(operacoes.media() + "");
-        }
+        try {
+            String dados = txtDados.getText();
+            List<Double> novosDados = new ArrayList<>();
+            for (StringTokenizer stringTokenizer = new StringTokenizer(dados, ";"); stringTokenizer.hasMoreTokens();) {
+                String token = stringTokenizer.nextToken();
+                novosDados.add(Double.parseDouble(token));
+            }
+            operacoes.setDados(novosDados);
+            if (bmedia.isSelected()) {
+                txtMedia.setText(numeroCortado(operacoes.media()));
+            }
 
-        if (bmediana.isSelected()) {
-           txtMediana.setText(operacoes.mediana() + "");
-        }
+            if (bmediana.isSelected()) {
+                txtMediana.setText(operacoes.mediana() + "");
+            }
 
-        if (bmoda.isSelected()) {
-            txtModa.setText(operacoes.moda() + "");
-        }
+            if (bmoda.isSelected()) {
 
-        if (bdesviopadrao.isSelected()) {
-            txtDesvio.setText(operacoes.desvioPadrao() + "");
-        }
+                String modaS = "";
 
-        if (grafico.isSelected()) {
-            
+                if (operacoes.ehModal()) {
+                    for (int i = 0; i < operacoes.moda().length; i++) {
+                        modaS += operacoes.moda()[i] + " ; ";
+                    }
+                } else {
+                    modaS = "Amodal";
+                }
+
+                txtModa.setText(modaS);
+            }
+
+            if (bdesviopadrao.isSelected()) {
+                txtDesvio.setText(numeroCortado(operacoes.desvioPadrao()));
+            }
+
+            if (bgrafico.isSelected()) {
+
+            }
+            salvarOperacao();
+        } catch (Exception e) {
         }
-        salvarOperacao();
     }//GEN-LAST:event_btnCalcularActionPerformed
 
-    
-    public void carregarHistorico(){
-        
+    public String numeroCortado(double numero) {
+        StringTokenizer stringTokenizer = new StringTokenizer((operacoes.media() + ""), ".");
+        String pInteira = stringTokenizer.nextToken();
+        String pDecimal = "." + stringTokenizer.nextToken().substring(0, 4);
+        return (pInteira + pDecimal);
     }
-    
-    public void salvarOperacao(){
+
+    public void carregarHistorico() {
+
+    }
+
+    public void salvarOperacao() {
         String row[] = new String[5];
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("(yyyy/MM/dd) - HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();  
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("(yyyy/MM/dd) - HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         row[0] = txtMedia.getText();
         row[1] = txtModa.getText();
         row[2] = txtMediana.getText();
@@ -345,15 +379,12 @@ public class layoutEstatistica extends javax.swing.JFrame {
 
     private void calcbasicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcbasicaActionPerformed
         new calcv3().setVisible(true);
-        
+
     }//GEN-LAST:event_calcbasicaActionPerformed
 
-    
-    
-   
-    
+
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-         JFileChooser jfc = new JFileChooser();
+        JFileChooser jfc = new JFileChooser();
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             arquivo = jfc.getSelectedFile();
             txtArquivo.setText(arquivo.getAbsolutePath());
@@ -364,8 +395,8 @@ public class layoutEstatistica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
-       String delimitador = ";";
-       txtDados.setText("");
+        String delimitador = ";";
+        txtDados.setText("");
         try {
             if (delimitador.length() != 1) {
                 throw new Exception("Use apenas um caractere como delimitador!!!");
@@ -379,20 +410,72 @@ public class layoutEstatistica extends javax.swing.JFrame {
             while (linha != null) {
                 txtDados.setText(txtDados.getText() + linha);
                 linha = buffer.readLine();
-                
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCarregarActionPerformed
 
-    private void btnCalcular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcular1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCalcular1ActionPerformed
+    private void btnLimparHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparHistoricoActionPerformed
+        ((DefaultTableModel) tbHistorico.getModel()).setRowCount(0);
+    }//GEN-LAST:event_btnLimparHistoricoActionPerformed
 
-    
-    
-    
+    private void btnLimparGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparGeralActionPerformed
+        txtArquivo.setText("");
+        txtDados.setText("");
+        txtDesvio.setText("");
+        txtMedia.setText("");
+        txtMediana.setText("");
+        txtModa.setText("");
+        bmedia.setSelected(false);
+        bmediana.setSelected(false);
+        bmoda.setSelected(false);
+        bdesviopadrao.setSelected(false);
+        bgrafico.setSelected(false);
+
+
+    }//GEN-LAST:event_btnLimparGeralActionPerformed
+
+    private void bgraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bgraficoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bgraficoActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        String delimitador = "@";
+        FileWriter writer = null;
+        try {
+            File historico = new File("../../res/historico.txt");
+            writer = new FileWriter(arquivo);
+            int nlinhas = ((DefaultTableModel) tbHistorico.getModel()).getRowCount();
+            int ncols = ((DefaultTableModel) tbHistorico.getModel()).getColumnCount();
+            for (int i = 0; i < nlinhas; i++) {
+                String linha = "";
+                for (int j = 0; j < ncols; j++) {
+                    linha += ((DefaultTableModel) tbHistorico.getModel()).getValueAt(i, j);
+//estou iterando a tabela
+                    if (j < ncols - 1) {
+                        linha += delimitador;
+                    }
+
+                }
+
+                writer.write(linha + "\n");
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                writer.close();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnFecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -431,17 +514,17 @@ public class layoutEstatistica extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox bdesviopadrao;
+    private javax.swing.JCheckBox bgrafico;
     private javax.swing.JCheckBox bmedia;
     private javax.swing.JCheckBox bmediana;
     private javax.swing.JCheckBox bmoda;
     private javax.swing.JButton btnCalcular;
-    private javax.swing.JButton btnCalcular1;
     private javax.swing.JButton btnCarregar;
+    private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnLimparGeral;
+    private javax.swing.JButton btnLimparHistorico;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JButton calcbasica;
-    private javax.swing.JCheckBox grafico;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbHistorico;

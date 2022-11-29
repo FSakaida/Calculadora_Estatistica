@@ -4,15 +4,17 @@ import java.util.List;
 import java.util.ArrayList;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.Frequency;
 
 public class calculosEstatisticos {
 // Get a DescriptiveStatistics instance
 
     DescriptiveStatistics stats;
     List<Double> dados = new ArrayList<>();
-    
-    public calculosEstatisticos(){
-        
+    Frequency frequencia = new Frequency();
+
+    public calculosEstatisticos() {
+
     }
 
     public calculosEstatisticos(List<Double> dados) {
@@ -20,8 +22,9 @@ public class calculosEstatisticos {
         this.stats = new DescriptiveStatistics();
         for (Double valor : dados) {
             stats.addValue((double) valor);
+            frequencia.addValue((double) valor);
         }
-        
+
     }
 
     public void setDados(List<Double> novos) {
@@ -30,6 +33,7 @@ public class calculosEstatisticos {
             this.stats = new DescriptiveStatistics();
             for (Double valor : novos) {
                 stats.addValue((double) valor);
+                frequencia.addValue((double) valor);
             }
         }
     }
@@ -46,9 +50,22 @@ public class calculosEstatisticos {
         return stats.getPercentile(50);
     }
 
-    public double moda() {     
+    public double[] moda() {     
         double data[] = dados.stream().mapToDouble(Double::doubleValue).toArray();
-        return StatUtils.mode(data)[0];
+        return StatUtils.mode(data);
+        // printar todas as modas
+        // pode ser amodal
+    }
+        
+    public boolean ehModal() {
+
+        for (Double dado : dados) {
+            if (frequencia.getCount(moda()[0]) != frequencia.getCount(dado)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
