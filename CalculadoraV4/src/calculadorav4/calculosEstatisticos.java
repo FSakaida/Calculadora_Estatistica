@@ -28,6 +28,9 @@ public class calculosEstatisticos {
         }
 
     }
+    public List<Double> getDados(){
+        return this.dados;
+    }
 
     public void setDados(List<Double> novos) {
         if (novos != null) {

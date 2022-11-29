@@ -307,9 +307,13 @@ public class layoutEstatistica extends javax.swing.JFrame {
     File arquivo;
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        String dados = txtDados.getText();
+        List<Double> novosDados = new ArrayList<>();
         try {
-            String dados = txtDados.getText();
-            List<Double> novosDados = new ArrayList<>();
+            
+            if (novosDados == null) {
+                throw new Exception("Dados Vazios!!!");
+            }
             for (StringTokenizer stringTokenizer = new StringTokenizer(dados, ";"); stringTokenizer.hasMoreTokens();) {
                 String token = stringTokenizer.nextToken();
                 novosDados.add(Double.parseDouble(token));
@@ -343,6 +347,8 @@ public class layoutEstatistica extends javax.swing.JFrame {
             }
 
             if (bgrafico.isSelected()) {
+                new Histograma();
+                
                 
             }
             salvarOperacao();
@@ -381,7 +387,8 @@ public class layoutEstatistica extends javax.swing.JFrame {
     }
 
     public void salvarOperacao() {
-        String row[] = new String[5];
+        try{
+            String row[] = new String[5];
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("(yyyy/MM/dd) - HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         row[0] = txtMedia.getText();
@@ -390,6 +397,10 @@ public class layoutEstatistica extends javax.swing.JFrame {
         row[3] = txtDesvio.getText();
         row[4] = dtf.format(now);
         ((DefaultTableModel) tbHistorico.getModel()).addRow(row);
+        }
+        catch(Exception e){
+            
+        }
     }
     private void txtArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtArquivoActionPerformed
         //onde vai aparecer os numeros que o usuario digitar
