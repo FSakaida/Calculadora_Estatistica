@@ -16,11 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
+import org.jfree.chart.ChartPanel;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.style.Styler;
 
 /**
  *
@@ -347,12 +344,15 @@ public class layoutEstatistica extends javax.swing.JFrame {
             }
 
             if (bgrafico.isSelected()) {
-                new Histograma();
+                Histograma histo = new Histograma();
+                new Thread(new SwingWrapper<>(histo.getChart()).displayChart());
                 
                 
             }
             salvarOperacao();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
+            System.out.println("asjlasklklnas");
         }
     }//GEN-LAST:event_btnCalcularActionPerformed
 

@@ -17,6 +17,7 @@ public class Histograma {
     private Map distributionMap;
     private int classWidth;
     private List<Integer> datasetList;
+    CategoryChart chart;
 
     public Histograma(List<Integer> dataset) {
 
@@ -28,15 +29,19 @@ public class Histograma {
         yData.addAll(distributionMap.values());
         List xData = Arrays.asList(distributionMap.keySet().toArray());
 
-        CategoryChart chart = buildChart(xData, yData);
-        new SwingWrapper<>(chart).displayChart();
+        chart = buildChart(xData, yData);
+        //
 
+    }
+    
+    public CategoryChart getChart(){
+        return this.chart;
     }
     
     public Histograma() {
 
         this.datasetList = Arrays.asList(
-          36, 25, 38, 46, 55, 68, 72,
+          10, 10, 38, 46, 55, 68, 72,
           55, 36, 38, 67, 45, 22, 48,
           91, 46, 52, 61, 58, 55);
         distributionMap = new TreeMap();
@@ -115,7 +120,7 @@ public class Histograma {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {;
         
         new Histograma();
     }
