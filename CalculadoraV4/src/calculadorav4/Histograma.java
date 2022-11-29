@@ -61,16 +61,16 @@ public class Histograma {
 
         // Create Chart
         CategoryChart chart = new CategoryChartBuilder().width(800).height(600)
-                .title("Age Distribution")
-                .xAxisTitle("Age Group")
-                .yAxisTitle("Frequency")
+                .title("Distribuição")
+                .xAxisTitle("Números")
+                .yAxisTitle("Frequência")
                 .build();
 
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
         chart.getStyler().setAvailableSpaceFill(0.99);
         chart.getStyler().setOverlapped(true);
 
-        chart.addSeries("age group", xData, yData);
+        chart.addSeries("Valor", xData, yData);
 
         return chart;
     }

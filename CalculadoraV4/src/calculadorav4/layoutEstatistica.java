@@ -307,10 +307,10 @@ public class layoutEstatistica extends javax.swing.JFrame {
         String dados = txtDados.getText();
         List<Double> novosDados = new ArrayList<>();
         try {
-            
-            if (novosDados == null) {
-                throw new Exception("Dados Vazios!!!");
-            }
+            // deu merda calcular sem nada
+//            if (txtDados.getText().equals("")) {
+//                throw new Exception("Dados Vazios!!!");
+//            }
             for (StringTokenizer stringTokenizer = new StringTokenizer(dados, ";"); stringTokenizer.hasMoreTokens();) {
                 String token = stringTokenizer.nextToken();
                 novosDados.add(Double.parseDouble(token));
